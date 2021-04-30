@@ -1,7 +1,10 @@
 <template>
   <div>
     <Navbar />
-    <div class="w-full back py-40 flex items-center justify-center">
+    <div class="w-full back bg-cover bg-center  flex flex-col items-center justify-center">
+      <div class="py-4">
+        <img class="w-32" src="https://i.pinimg.com/originals/f8/7f/f0/f87ff0ddf2874b20d8c3c37b10681a35.png" alt="">
+      </div>
       <!-- Search Box -->
       <div class="bg-white sm:w-10/12 md:w-6/12 xl:w-4/12 px-8 py-2 rounded-lg relative">
         <div class="text-sm font-bold py-1">
@@ -16,7 +19,8 @@
           </button>
         </div>
         <!-- Input -->
-        <input v-model="searchPokemon" class="bg-gray-200 w-full py-2 rounded px-2 focus:outline-none border-2 border-white focus:border-yellow-400 duration-300" type="text" placeholder="Alakazam...">
+        <audio ref="pika" src="/pika.mp3" />
+        <input v-model="searchPokemon" class="bg-gray-200 w-full py-2 rounded px-2 focus:outline-none border-2 border-white focus:border-yellow-400 duration-300" type="text" placeholder="Alakazam..." @click="playPika()">
         <div class="flex mt-2">
           <button :class="{'bg-gray-300' : isClicked, 'bg-white' : isClicked === false}" class="w-1/2 py-2 focus:outline-none text-center text-sm rounded-md" @click="searchOptions = true, isClicked = true">
             Busquedas recientes
@@ -90,7 +94,13 @@ export default {
       this.favoritesPokemons.splice(index, 1)
     },
     addRecentSearch () {
+      if (this.recentlySearch.length === 5) {
+        this.recentlySearch.pop()
+      }
       this.recentlySearch.unshift({ recent: this.searchPokemon })
+    },
+    playPika () {
+      this.$refs.pika.play()
     }
   }
 }
@@ -98,6 +108,7 @@ export default {
 
 <style>
 .back{
+  height: 858px;
   background-image: url('https://i.pinimg.com/originals/52/69/0c/52690c8c4d930ba7ea669442b3a466ad.png');
 }
 </style>
